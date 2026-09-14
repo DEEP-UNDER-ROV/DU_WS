@@ -1,0 +1,14 @@
+<launch>
+
+  <arg name="params_file" default="$(find-pkg-share rov_postpro)/config/extract_stereo.yaml"/>
+
+  <arg name="bag_path" default=""/>
+  <arg name="output_dir" default="./stereo_extract"/>
+
+  <node pkg="rov_postpro" exec="extract_stereo_node" name="extract_stereo" output="screen">
+    <param from="$(var params_file)"/>
+    <param name="bag_path" value="$(var bag_path)"/>
+    <param name="output_dir" value="$(var output_dir)"/>
+  </node>
+
+</launch>

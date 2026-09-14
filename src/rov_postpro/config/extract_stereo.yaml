@@ -1,0 +1,25 @@
+extract_stereo:
+  ros__parameters:
+    bag_path: ""
+
+    left_topic: "/corrected/left/image_raw"
+    right_topic: "/corrected/right/image_raw"
+
+    output_dir: "./stereo_extract_acp_1"
+    image_format: "png"
+    jpg_quality: 95
+
+    # Max allowed |left_stamp - right_stamp| for a pair to count as synced.
+    sync_slop_sec: 0.02
+
+    # --- sampling: pick ONE of these two ---
+    sample_stride: 30
+    # If > 0, this overrides sample_stride and instead keeps the first pair
+    # after each sample_period_sec has elapsed (e.g. 1.0 -> ~1 frame/sec).
+    sample_period_sec: 0.0
+
+    save_timestamps_csv: true
+
+    # Only matters in live mode.
+    left_qos_reliability: "reliable" # or "best_effort" for raw camera driver topics
+    right_qos_reliability: "reliable"

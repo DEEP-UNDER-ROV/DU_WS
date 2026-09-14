@@ -1,0 +1,6 @@
+[submodule "src/rov_control/IBVS_Observer-based_Controller"]
+	path = src/rov_control/IBVS_Observer-based_Controller
+	url = https://github.com/DEEP-UNDER-ROV/IBVS_Observer-based_Controller.git
+[submodule "src/rov_perception"]
+	path = src/rov_perception
+	url = https://github.com/DEEP-UNDER-ROV/DU_Perception_Apriltag_Triangulate.git
