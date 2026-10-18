@@ -1,0 +1,25 @@
+<launch>
+    <arg name="sim_url" default="udp://:14550@" />
+    <arg name="tgt_system" default="1" />
+    <arg name="real_fc_url" default="serial:///dev/ttyACM0:921600" />
+    <arg name="use_sim" default="false" />
+    <arg name="gcs_ip" default="127.0.0.1:19555" />
+    <let name="fcu_url" value="$(eval '\'$(var real_fc_url)\' if \'$(var use_sim)\' == \'false\' else \'$(var sim_url)\'')" />
+    <let name="conn_timeout" value="$(eval '10.0 if \'$(var use_sim)\' == \'false\' else 120.0')" />
+    <node pkg="mavros" exec="mavros_node" output="screen">
+        <param from="$(find-pkg-share mavros)/launch/apm_pluginlists.yaml" />
+        <param from="$(find-pkg-share mavros)/launch/apm_config.yaml" />
+        <param name="fcu_url" value="$(var fcu_url)"/>
+        <param name="gcs_url" value="udp://@$(var gcs_ip)"/>
+        <param name="tgt_system" value="$(var tgt_system)"/>
+        <param name="system_id" value="255"/>
+        <param name="conn/timeout" value="$(var conn_timeout)" />
+        <param name="conn/heartbeat_rate" value="1.0" />
+        <param name="conn/timesync_rate" value="0.0" />
+        <param name="sys/min_voltage" value="0.0" />
+    </node>
+    <include file="$(find-pkg-share rov_mavros)/launch/slam_to_mavros.launch.xml">
+        <arg name="use_sim_time" value="$(var use_sim)"/>
+    </include>
+
+</launch>
