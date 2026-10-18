@@ -1,0 +1,37 @@
+<launch>
+  <arg name="pose_topic" default="/orb_slam3/pose"
+       description="ORB-SLAM3 geometry_msgs/PoseStamped topic"/>
+  <arg name="velocity_topic" default="/orb_slam3/velocity"
+       description="ORB-SLAM3 geometry_msgs/TwistStamped topic (needs enable_velocity:=true on the SLAM node)"/>
+  <arg name="velocity_in_camera_frame" default="false"
+       description="false: velocity is already in the SLAM map frame"/>
+  <arg name="velocity_timeout" default="0.5"
+       description="Max stamp gap (s) between pose and velocity before velocity is skipped"/>
+  <arg name="output_rate" default="30.0" description="Max publish rate in Hz, 0 = every message"/>
+
+  <!-- ORB-SLAM3 node already outputs a FLU body pose, so no extra rotation by default.
+       The T265 values were gamma_world=-1.5707963, pitch_cam=0.349066 -->
+  <arg name="gamma_world" default="0.0" description="World yaw rotation (rad)"/>
+  <arg name="roll_cam" default="0.0" description="Camera-to-body roll (rad)"/>
+  <arg name="pitch_cam" default="0.0" description="Camera-to-body pitch (rad)"/>
+  <arg name="yaw_cam" default="0.0" description="Camera-to-body yaw (rad)"/>
+
+  <arg name="pose_jump_threshold" default="0.1" description="Displacement (m) counted as a pose jump"/>
+  <arg name="enable_precland" default="false"/>
+  <arg name="use_sim_time" default="false"/>
+
+  <node pkg="rov_mavros" exec="slam_to_mavros" name="vision_to_mavros_node" output="screen">
+    <param name="pose_topic" value="$(var pose_topic)"/>
+    <param name="velocity_topic" value="$(var velocity_topic)"/>
+    <param name="velocity_in_camera_frame" value="$(var velocity_in_camera_frame)"/>
+    <param name="velocity_timeout" value="$(var velocity_timeout)"/>
+    <param name="output_rate" value="$(var output_rate)"/>
+    <param name="gamma_world" value="$(var gamma_world)"/>
+    <param name="roll_cam" value="$(var roll_cam)"/>
+    <param name="pitch_cam" value="$(var pitch_cam)"/>
+    <param name="yaw_cam" value="$(var yaw_cam)"/>
+    <param name="pose_jump_threshold" value="$(var pose_jump_threshold)"/>
+    <param name="enable_precland" value="$(var enable_precland)"/>
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
+</launch>

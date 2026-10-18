@@ -1,9 +1,12 @@
 build/
 install/
 log/
+logs/
 /*.pcd
 /*.ply
 /*.txt
 .clangd
 compile_commands.json
 .cache/
+mav*
+eeprom.bin
