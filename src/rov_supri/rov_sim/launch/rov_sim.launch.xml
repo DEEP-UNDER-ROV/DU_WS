@@ -1,5 +1,0 @@
-<launch>
-    <include file="$(find-pkg-share rov_sim)/launch/sitl.launch.xml"/>
-    <include file="$(find-pkg-share rov_sim)/launch/gz.launch.xml"/>
-</launch>
-

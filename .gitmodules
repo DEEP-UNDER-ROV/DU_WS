@@ -4,3 +4,9 @@
 [submodule "src/rov_perception"]
 	path = src/rov_perception
 	url = https://github.com/DEEP-UNDER-ROV/DU_Perception_Apriltag_Triangulate.git
+[submodule "src/rov_supri/thirdparty/Ardusupri"]
+	path = src/rov_supri/thirdparty/Ardusupri
+	url = https://github.com/DEEP-UNDER-ROV/Ardusupri.git
+[submodule "src/rov_supri/thirdparty/ardupilot_gazebo"]
+	path = src/rov_supri/thirdparty/ardupilot_gazebo
+	url = https://github.com/ArduPilot/ardupilot_gazebo.git
