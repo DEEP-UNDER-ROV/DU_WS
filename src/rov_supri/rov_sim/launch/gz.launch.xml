@@ -1,0 +1,24 @@
+<launch>
+  <arg name="world" default="shipwreck.world" description="World file name inside rov_sim/worlds"/>
+  <arg name="use_bridge" default="true" description="Start ros_gz_bridge"/>
+
+  <let name="rov_sim_share" value="$(find-pkg-share rov_sim)"/>
+  <let name="rov_sim_prefix" value="$(find-pkg-prefix rov_sim)"/>
+  <let name="ardu_gazebo_prefix" value="$(find-pkg-prefix ardupilot_gazebo)"/>
+
+  <set_env name="GZ_SIM_RESOURCE_PATH" value="$(var rov_sim_share)/models:$(var rov_sim_share)/worlds"/>
+  <set_env name="GZ_SIM_SYSTEM_PLUGIN_PATH"
+           value="$(var rov_sim_prefix)/lib:$(var ardu_gazebo_prefix)/lib/ardupilot_gazebo"/>
+
+  <executable cmd="gz sim -v4 -r $(var rov_sim_share)/worlds/$(var world)" output="screen"/>
+
+  <group if="$(var use_bridge)">
+    <node pkg="ros_gz_bridge" exec="parameter_bridge" name="gz_bridge" output="screen">
+      <param name="config_file" value="$(var rov_sim_share)/config/rov_bridge.yaml"/>
+    </node>
+    <node pkg="topic_tools" exec="relay" name="left_ir_relay" output="screen"
+          args="/camera/infra1/image_rect_raw /corrected/left/image_raw" />
+    <node pkg="topic_tools" exec="relay" name="right_ir_relay" output="screen"
+          args="/camera/infra2/image_rect_raw /corrected/right/image_raw" />
+  </group>
+</launch>
