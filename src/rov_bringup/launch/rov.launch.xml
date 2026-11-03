@@ -2,12 +2,12 @@
   <arg name="use_sim" default="false" description="true: start the simulation from rov_sim and connect MAVROS to it"/>
 
   <arg name="param_dir" default="$(find-pkg-share rov_bringup)/config"/>
-  <arg name="param_file" default="ardusupri.params"/>
-  <arg name="bridge_file" default="rov_bridge.yaml"/>
-  <arg name="pluginlists_file" default="apm_pluginlists.yaml"/>
-  <arg name="apm_config_file" default="apm_config.yaml"/>
-  <arg name="mavros_param_file" default="mavros.yaml"/>
-  <arg name="slam_mavros_file" default="slam_to_mavros.yaml"/>
+  <arg name="param_file" default="sim/ardusupri.params"/>
+  <arg name="bridge_file" default="sim/rov_bridge.yaml"/>
+  <arg name="pluginlists_file" default="mavros/apm_pluginlists.yaml"/>
+  <arg name="apm_config_file" default="mavros/apm_config.yaml"/>
+  <arg name="mavros_param_file" default="mavros/mavros.yaml"/>
+  <arg name="slam_mavros_file" default="mavros/slam_to_mavros.yaml"/>
   <!-- rov_sim -->
   <arg name="world" default="shipwreck.world" description="World file name inside rov_sim/worlds"/>
   <arg name="use_bridge" default="true" description="Start ros_gz_bridge and image relays"/>
