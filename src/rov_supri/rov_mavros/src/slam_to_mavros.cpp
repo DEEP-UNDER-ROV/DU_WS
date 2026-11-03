@@ -27,30 +27,32 @@ void VisionToMavros::navigationParameters(void) {
       this->create_publisher<geometry_msgs::msg::TwistWithCovarianceStamped>(
           "/mavros/vision_speed/speed_twist_cov", 10);
 
-  this->declare_parameter<std::string>("pose_topic", "/orb_slam3/pose");
-  this->get_parameter("pose_topic", pose_topic);
-  this->declare_parameter<std::string>("velocity_topic", "/orb_slam3/velocity");
-  this->get_parameter("velocity_topic", velocity_topic);
-  this->declare_parameter<bool>("velocity_in_camera_frame", false);
-  this->get_parameter("velocity_in_camera_frame", velocity_in_camera_frame);
-  this->declare_parameter<double>("velocity_timeout", 0.5);
-  this->get_parameter("velocity_timeout", velocity_timeout);
-  this->declare_parameter<double>("output_rate", 30.0);
-  this->get_parameter("output_rate", output_rate);
-  this->declare_parameter<double>("gamma_world", -1.5707963);
-  this->get_parameter("gamma_world", gamma_world);
-  this->declare_parameter<double>("roll_cam", 0.0);
-  this->get_parameter("roll_cam", roll_cam);
-  this->declare_parameter<double>("pitch_cam", 0.349066);
-  this->get_parameter("pitch_cam", pitch_cam);
-  this->declare_parameter<double>("yaw_cam", 0.0);
-  this->get_parameter("yaw_cam", yaw_cam);
-  this->declare_parameter<double>("linear_accel_cov", 0.01);
-  this->get_parameter("linear_accel_cov", linear_accel_cov);
-  this->declare_parameter<double>("angular_vel_cov", 0.01);
-  this->get_parameter("angular_vel_cov", angular_vel_cov);
-  this->declare_parameter<double>("pose_jump_threshold", 0.1);
-  this->get_parameter("pose_jump_threshold", pose_jump_threshold);
+  pose_topic = this->declare_parameter<std::string>("input.pose_topic",
+                                                    "/orb_slam3/pose");
+  velocity_topic = this->declare_parameter<std::string>(
+      "input.velocity_topic", "/orb_slam3/velocity");
+  velocity_in_camera_frame =
+      this->declare_parameter<bool>("input.velocity_in_camera_frame", false);
+  velocity_timeout =
+      this->declare_parameter<double>("input.velocity_timeout", 0.5);
+
+  output_rate = this->declare_parameter<double>("output.rate", 30.0);
+
+  gamma_world =
+      this->declare_parameter<double>("transform.world_yaw", -1.5707963);
+  roll_cam =
+      this->declare_parameter<double>("transform.camera_to_body.roll", 0.0);
+  pitch_cam = this->declare_parameter<double>("transform.camera_to_body.pitch",
+                                              0.349066);
+  yaw_cam =
+      this->declare_parameter<double>("transform.camera_to_body.yaw", 0.0);
+
+  linear_accel_cov = this->declare_parameter<double>("covariance.linear", 0.01);
+  angular_vel_cov =
+      this->declare_parameter<double>("covariance.angular", 0.01);
+
+  pose_jump_threshold =
+      this->declare_parameter<double>("pose_jump.threshold", 0.1);
 
   auto qos = rclcpp::QoS(rclcpp::SensorDataQoS());
   pose_subscriber = this->create_subscription<geometry_msgs::msg::PoseStamped>(
@@ -63,19 +65,22 @@ void VisionToMavros::navigationParameters(void) {
           std::bind(&VisionToMavros::velocityCallback, this,
                     std::placeholders::_1));
 
-  RCLCPP_INFO(this->get_logger(), "pose_topic: %s", pose_topic.c_str());
-  RCLCPP_INFO(this->get_logger(), "velocity_topic: %s (%s frame)",
+  RCLCPP_INFO(this->get_logger(), "input.pose_topic: %s", pose_topic.c_str());
+  RCLCPP_INFO(this->get_logger(), "input.velocity_topic: %s (%s frame)",
               velocity_topic.c_str(),
               velocity_in_camera_frame ? "camera" : "odom");
-  RCLCPP_INFO(this->get_logger(), "output_rate: %.1f Hz (0 = every message)",
-              output_rate);
-  RCLCPP_INFO(this->get_logger(), "gamma_world: %.4f rad (%.1f deg)",
+  RCLCPP_INFO(this->get_logger(),
+              "output.rate: %.1f Hz (0 = every message)", output_rate);
+  RCLCPP_INFO(this->get_logger(), "transform.world_yaw: %.4f rad (%.1f deg)",
               gamma_world, gamma_world * 180.0 / M_PI);
-  RCLCPP_INFO(this->get_logger(), "roll_cam: %.4f rad (%.1f deg)", roll_cam,
+  RCLCPP_INFO(this->get_logger(),
+              "transform.camera_to_body.roll: %.4f rad (%.1f deg)", roll_cam,
               roll_cam * 180.0 / M_PI);
-  RCLCPP_INFO(this->get_logger(), "pitch_cam: %.4f rad (%.1f deg)", pitch_cam,
+  RCLCPP_INFO(this->get_logger(),
+              "transform.camera_to_body.pitch: %.4f rad (%.1f deg)", pitch_cam,
               pitch_cam * 180.0 / M_PI);
-  RCLCPP_INFO(this->get_logger(), "yaw_cam: %.4f rad (%.1f deg)", yaw_cam,
+  RCLCPP_INFO(this->get_logger(),
+              "transform.camera_to_body.yaw: %.4f rad (%.1f deg)", yaw_cam,
               yaw_cam * 180.0 / M_PI);
 }
 
