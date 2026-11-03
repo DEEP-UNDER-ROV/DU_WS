@@ -3,7 +3,7 @@
 	url = https://github.com/DEEP-UNDER-ROV/IBVS_Observer-based_Controller.git
 [submodule "src/rov_perception"]
 	path = src/rov_perception
-	url = https://github.com/DEEP-UNDER-ROV/DU_Perception_Apriltag_Triangulate.git
+	url = https://github.com/DEEP-UNDER-ROV/DU_Perception.git
 [submodule "src/rov_supri/thirdparty/Ardusupri"]
 	path = src/rov_supri/thirdparty/Ardusupri
 	url = https://github.com/DEEP-UNDER-ROV/Ardusupri.git
