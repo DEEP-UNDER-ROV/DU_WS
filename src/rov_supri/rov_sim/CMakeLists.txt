@@ -11,10 +11,48 @@ find_package(ament_cmake REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
+get_filename_component(ARDUSUPRI_DIR
+  "${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty/Ardusupri" REALPATH)
+
+option(BUILD_ARDUSUB_SITL "Build ArduSub SITL with waf" ON)
+if(BUILD_ARDUSUB_SITL)
+  execute_process(
+    COMMAND python3 -c "import em"
+    RESULT_VARIABLE EM_RESULT
+    OUTPUT_QUIET ERROR_QUIET)
+  if(NOT EM_RESULT EQUAL 0)
+    message(FATAL_ERROR "Missing Python module 'empy'. Run ./setup.sh first.")
+  endif()
+
+  if(NOT EXISTS "${ARDUSUPRI_DIR}/build/sitl/c4che/_cache.py")
+    execute_process(
+      COMMAND python3 ./waf configure --board sitl
+      WORKING_DIRECTORY "${ARDUSUPRI_DIR}"
+      RESULT_VARIABLE WAF_CONFIGURE_RESULT)
+    if(NOT WAF_CONFIGURE_RESULT EQUAL 0)
+      message(FATAL_ERROR "waf configure failed in ${ARDUSUPRI_DIR}")
+    endif()
+  endif()
+
+  add_custom_target(build_ardusub ALL
+    COMMAND python3 ./waf sub
+    WORKING_DIRECTORY "${ARDUSUPRI_DIR}"
+    USES_TERMINAL)
+endif()
+
+configure_file(
+  launch/sitl.launch.xml.in
+  ${CMAKE_CURRENT_BINARY_DIR}/launch/sitl.launch.xml
+  @ONLY)
+
 install(
   DIRECTORY models worlds launch config params
   DESTINATION share/${PROJECT_NAME}
-  PATTERN "*~" EXCLUDE)
+  PATTERN "*~" EXCLUDE
+  PATTERN "*.in" EXCLUDE)
+install(
+  FILES ${CMAKE_CURRENT_BINARY_DIR}/launch/sitl.launch.xml
+  DESTINATION share/${PROJECT_NAME}/launch)
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
