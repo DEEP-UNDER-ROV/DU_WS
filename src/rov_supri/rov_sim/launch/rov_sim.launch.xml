@@ -1,5 +1,30 @@
 <launch>
-    <include file="$(find-pkg-share rov_sim)/launch/sitl.launch.xml"/>
-    <include file="$(find-pkg-share rov_sim)/launch/gz.launch.xml"/>
-</launch>
+  <!-- gz -->
+  <arg name="world" default="shipwreck.world" description="World file name inside rov_sim/worlds"/>
+  <arg name="use_bridge" default="true" description="Start ros_gz_bridge and image relays"/>
+  <!-- sitl -->
+  <arg name="instance" default="0" description="ArduSub instance ID (0, 1, 2...)"/>
+  <arg name="sysid" default="1" description="MAVLink system ID"/>
+  <arg name="param_file" default="$(find-pkg-share rov_sim)/params/ping.params" description="Extra ArduSub param file"/>
+  <arg name="use_map" default="false" description="Open the MAVProxy map"/>
+  <arg name="use_console" default="false" description="Open the MAVProxy console"/>
+  <!-- tf -->
+  <arg name="use_tf" default="true" description="Publish static TF for the D455 camera"/>
 
+  <set_env name="QT_QPA_PLATFORM" value="xcb"/>
+
+  <include file="$(find-pkg-share rov_sim)/launch/sitl.launch.xml">
+    <arg name="instance" value="$(var instance)"/>
+    <arg name="sysid" value="$(var sysid)"/>
+    <arg name="param_file" value="$(var param_file)"/>
+    <arg name="use_map" value="$(var use_map)"/>
+    <arg name="use_console" value="$(var use_console)"/>
+  </include>
+
+  <include file="$(find-pkg-share rov_sim)/launch/gz.launch.xml">
+    <arg name="world" value="$(var world)"/>
+    <arg name="use_bridge" value="$(var use_bridge)"/>
+  </include>
+
+  <include file="$(find-pkg-share rov_sim)/launch/d455_tf.launch.xml" if="$(var use_tf)"/>
+</launch>

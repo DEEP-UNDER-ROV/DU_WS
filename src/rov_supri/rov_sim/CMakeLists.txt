@@ -24,7 +24,7 @@ if(BUILD_ARDUSUB_SITL)
     message(FATAL_ERROR "Missing Python module 'empy'. Run ./setup.sh first.")
   endif()
 
-  if(NOT EXISTS "${ARDUSUPRI_DIR}/build/sitl/c4che/_cache.py")
+  if(NOT EXISTS "${ARDUSUPRI_DIR}/build/c4che/sitl_cache.py")
     execute_process(
       COMMAND python3 ./waf configure --board sitl
       WORKING_DIRECTORY "${ARDUSUPRI_DIR}"
