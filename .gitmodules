@@ -11,3 +11,6 @@
 [submodule "src/rov_supri/thirdparty/ardupilot_gazebo"]
 	path = src/rov_supri/thirdparty/ardupilot_gazebo
 	url = https://github.com/ArduPilot/ardupilot_gazebo.git
+[submodule "src/rov_supri/thirdparty/mavros"]
+	path = src/rov_supri/thirdparty/mavros
+	url = https://github.com/DEEP-UNDER-ROV/mavros.git
