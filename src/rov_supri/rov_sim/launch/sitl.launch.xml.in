@@ -3,7 +3,7 @@
     <arg name="sysid" default="1" description="MAVLink System ID" />
     <arg name="use_map" default="false" />
     <arg name="use_console" default="false" />
-    <arg name="param_file" default="$(find-pkg-share rov_sim)/params/ping.params" />
+    <arg name="param_file" default="$(find-pkg-share rov_sim)/params/ardusupri.params" />
     <let name="map_flag" value="$(eval '\'--map\' if \'$(var use_map)\' == \'true\' else \'\'')" />
     <let name="console_flag" value="$(eval '\'--console\' if \'$(var use_console)\' == \'true\' else \'\'')" />
 
