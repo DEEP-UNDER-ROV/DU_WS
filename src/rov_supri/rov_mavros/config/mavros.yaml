@@ -1,0 +1,13 @@
+/**:
+  ros__parameters:
+    gcs_url: udp://@127.0.0.1:19555
+    tgt_system: 1
+    system_id: 255
+
+    conn:
+      heartbeat_rate: 1.0
+      timesync_rate: 0.0
+
+/**/sys:
+  ros__parameters:
+    min_voltage: [0.0]    # overrides [10.0] from apm_config.yaml
