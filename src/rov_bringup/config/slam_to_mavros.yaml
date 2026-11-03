@@ -1,0 +1,24 @@
+vision_to_mavros_node:
+  ros__parameters:
+    input:
+      pose_topic: /orb_slam3/pose
+      velocity_topic: /orb_slam3/velocity   
+      velocity_in_camera_frame: false       # false = velocity is already in the SLAM map frame
+      velocity_timeout: 0.5                 # s, max stamp gap between pose and velocity
+
+    output:
+      rate: 30.0                            # Hz, 0 = publish every message
+
+    transform:
+      world_yaw: 0.0                        # rad
+      camera_to_body:
+        roll: 0.0                           # rad
+        pitch: 0.0                          # rad
+        yaw: 0.0                            # rad
+
+    covariance:
+      linear: 0.01
+      angular: 0.01
+
+    pose_jump:
+      threshold: 0.1                        # m

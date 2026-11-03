@@ -1,7 +1,14 @@
 <launch>
   <arg name="use_sim" default="false" description="true: start the simulation from rov_sim and connect MAVROS to it"/>
 
-  <!-- sim only (rov_sim) -->
+  <arg name="param_dir" default="$(find-pkg-share rov_bringup)/config"/>
+  <arg name="param_file" default="ardusupri.params"/>
+  <arg name="bridge_file" default="rov_bridge.yaml"/>
+  <arg name="pluginlists_file" default="apm_pluginlists.yaml"/>
+  <arg name="apm_config_file" default="apm_config.yaml"/>
+  <arg name="mavros_param_file" default="mavros.yaml"/>
+  <arg name="slam_mavros_file" default="slam_to_mavros.yaml"/>
+  <!-- rov_sim -->
   <arg name="world" default="shipwreck.world" description="World file name inside rov_sim/worlds"/>
   <arg name="use_bridge" default="true" description="Start ros_gz_bridge and image relays"/>
   <arg name="use_tf" default="true" description="Publish static TF for the D455 camera"/>
@@ -12,10 +19,9 @@
 
   <arg name="sysid" default="1" description="MAVLink system ID of the vehicle"/>
 
-  <!-- mavros (rov_mavros) -->
+  <!-- rov_mavros -->
   <arg name="sim_url" default="udp://:14550@" description="FCU url used when use_sim:=true"/>
   <arg name="real_fc_url" default="serial:///dev/ttyACM0:921600" description="FCU url used when use_sim:=false"/>
-  <arg name="gcs_ip" default="127.0.0.1:19555" description="GCS address MAVROS forwards to"/>
 
   <include file="$(find-pkg-share rov_sim)/launch/rov_sim.launch.xml" if="$(var use_sim)">
     <arg name="world" value="$(var world)"/>
@@ -23,16 +29,21 @@
     <arg name="use_tf" value="$(var use_tf)"/>
     <arg name="instance" value="$(var instance)"/>
     <arg name="sysid" value="$(var sysid)"/>
+    <arg name="param_dir" value="$(var param_dir)"/>
     <arg name="param_file" value="$(var param_file)"/>
+    <arg name="bridge_file" value="$(var bridge_file)"/>
     <arg name="use_map" value="$(var use_map)"/>
     <arg name="use_console" value="$(var use_console)"/>
   </include>
 
   <include file="$(find-pkg-share rov_mavros)/launch/rov_mavros.launch.xml">
+    <arg name="param_dir" value="$(var param_dir)"/>
+    <arg name="pluginlists_file" value="$(var pluginlists_file)"/>
+    <arg name="apm_config_file" value="$(var apm_config_file)"/>
+    <arg name="mavros_param_file" value="$(var mavros_param_file)"/>
+    <arg name="slam_mavros_file" value="$(var slam_mavros_file)"/>
     <arg name="use_sim" value="$(var use_sim)"/>
     <arg name="sim_url" value="$(var sim_url)"/>
     <arg name="real_fc_url" value="$(var real_fc_url)"/>
-    <arg name="tgt_system" value="$(var sysid)"/>
-    <arg name="gcs_ip" value="$(var gcs_ip)"/>
   </include>
 </launch>
