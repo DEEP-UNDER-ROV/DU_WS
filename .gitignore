@@ -8,5 +8,6 @@ logs/
 .clangd
 compile_commands.json
 .cache/
-mav*
 eeprom.bin
+/mav*.parm
+/mav*.tlog*
