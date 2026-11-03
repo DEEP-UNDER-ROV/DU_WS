@@ -4,7 +4,7 @@
     <arg name="pluginlists_file" default="apm_pluginlists.yaml"/>
     <arg name="apm_config_file" default="apm_config.yaml"/>
     <arg name="mavros_param_file" default="mavros.yaml"/>
-    <arg name="vision_param_file" default="vision_to_mavros.yaml"/>
+    <arg name="slam_mavros_file" default="slam_to_mavros.yaml"/>
 
     <arg name="use_sim" default="false"/>
     <arg name="sim_url" default="udp://:14550@"/>
@@ -23,7 +23,7 @@
 
     <include file="$(find-pkg-share rov_mavros)/launch/slam_to_mavros.launch.xml">
         <arg name="param_dir" value="$(var param_dir)"/>
-        <arg name="param_file" value="$(var vision_param_file)"/>
+        <arg name="param_file" value="$(var slam_mavros_file)"/>
         <arg name="use_sim_time" value="$(var use_sim)"/>
     </include>
 </launch>
