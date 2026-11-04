@@ -1,0 +1,34 @@
+<launch>
+  <arg name="enable_color" default="true" />
+  <arg name="enable_depth" default="true" />
+  <arg name="use_sim" default="false" />
+  <arg name="use_correction" default="true" />
+  <arg name="enable_stream" default="true" />
+  <arg name="remapper_file" default="perception/image_remapper.yaml" />
+  <arg name="param_dir" default="$(find-pkg-share rov_bringup)/config"/>
+  <arg name="streamer_file" default="perception/streamer.yaml"/>
+  <arg name="left_map_file" default="perception/map_left.yaml"/>
+  <arg name="right_map_file" default="perception/map_right.yaml"/>
+
+  <include file="$(find-pkg-share rov_vision)/launch/rs_cam.launch.py" unless="$(var use_sim)">
+    <arg name="enable_color" value="$(var enable_color)" />
+  </include>
+
+  <group unless="$(var use_sim)">
+    <group if="$(var use_correction)">
+      <include file="$(find-pkg-share jir_image_remapper)/launch/stereo_remapper.launch.xml">
+        <arg name="param_dir"     value="$(var param_dir)"/>
+        <arg name="config_file"   value="$(var remapper_file)"/>
+        <arg name="left_map_file" value="$(var left_map_file)"/>
+        <arg name="right_map_file" value="$(var right_map_file)"/>
+      </include>
+    </group>
+  </group>
+
+  <group if="$(var enable_stream)">
+    <include file="$(find-pkg-share rov_vision)/launch/streamer.launch.xml">
+      <arg name="param_dir" value="$(var param_dir)"/>
+      <arg name="streamer_file" value="$(var streamer_file)"/>
+    </include>
+  </group>
+</launch>
