@@ -3,10 +3,10 @@
        description="Directory that contains the parameter file"/>
   <arg name="param_file" default="slam_to_mavros.yaml"
        description="Parameter file name, resolved inside param_dir"/>
-  <arg name="use_sim_time" default="false"/>
+  <arg name="use_sim" default="false"/>
 
   <node pkg="rov_mavros" exec="slam_to_mavros" name="vision_to_mavros_node" output="screen">
     <param from="$(var param_dir)/$(var param_file)"/>
-    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <param name="use_sim_time" value="$(var use_sim)"/>
   </node>
 </launch>
