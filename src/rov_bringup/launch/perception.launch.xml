@@ -2,6 +2,7 @@
   <arg name="enable_color" default="true" />
   <arg name="enable_depth" default="true" />
   <arg name="use_sim" default="false" />
+  <arg name="use_camera" default="true" />
   <arg name="use_correction" default="true" />
   <arg name="enable_stream" default="true" />
   <arg name="remapper_file" default="perception/image_remapper.yaml" />
@@ -10,10 +11,6 @@
   <arg name="left_map_file" default="perception/map_left.yaml"/>
   <arg name="right_map_file" default="perception/map_right.yaml"/>
 
-  <include file="$(find-pkg-share rov_vision)/launch/rs_cam.launch.py" unless="$(var use_sim)">
-    <arg name="enable_color" value="$(var enable_color)" />
-  </include>
-
   <group unless="$(var use_sim)">
     <group if="$(var use_correction)">
       <include file="$(find-pkg-share jir_image_remapper)/launch/stereo_remapper.launch.xml">
@@ -21,6 +18,11 @@
         <arg name="config_file"   value="$(var remapper_file)"/>
         <arg name="left_map_file" value="$(var left_map_file)"/>
         <arg name="right_map_file" value="$(var right_map_file)"/>
+      </include>
+    </group>
+    <group if="$(var use_camera)">
+      <include file="$(find-pkg-share rov_vision)/launch/rs_cam.launch.py">
+        <arg name="enable_color" value="$(var enable_color)" />
       </include>
     </group>
   </group>
