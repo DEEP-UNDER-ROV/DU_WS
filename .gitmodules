@@ -14,3 +14,9 @@
 [submodule "src/rov_supri/thirdparty/mavros"]
 	path = src/rov_supri/thirdparty/mavros
 	url = https://github.com/DEEP-UNDER-ROV/mavros.git
+[submodule "src/rov_supri/thirdparty/realsense/librealsense"]
+	path = src/rov_supri/thirdparty/realsense/librealsense
+	url = https://github.com/DEEP-UNDER-ROV/librealsense.git
+[submodule "src/rov_supri/thirdparty/realsense/realsense-ros"]
+	path = src/rov_supri/thirdparty/realsense/realsense-ros
+	url = https://github.com/realsenseai/realsense-ros.git
