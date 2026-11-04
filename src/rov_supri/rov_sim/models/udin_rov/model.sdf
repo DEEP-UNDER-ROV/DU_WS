@@ -96,7 +96,7 @@
     <!-- Pose: X, Y, Z, Roll, Pitch, Yaw -->
     <!--Horizontal Kiri-->
     <link name="thruster1">
-      <pose>0 0.278 0 0 0 0</pose>
+      <pose>0 0.2225 0 0 0 0</pose>
       <visual name="thruster_prop_visual">
         <pose>0 0 0 0 0 1.571</pose>
         <geometry>
@@ -120,7 +120,7 @@
 
     <!--Horizontal Kanan-->
     <link name="thruster2">
-      <pose>0 -0.278 0 0 0 0</pose>
+      <pose>0 -0.2225 0 0 0 0</pose>
       <visual name="thruster_prop_visual">
         <pose>0 0 0 0 0 -1.571</pose>
         <geometry>
