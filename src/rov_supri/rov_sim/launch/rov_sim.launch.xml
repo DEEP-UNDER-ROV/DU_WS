@@ -2,7 +2,7 @@
   <!-- config -->
   <arg name="param_dir" default="$(find-pkg-share rov_sim)/config"
        description="Directory that contains the ArduSub param file and the bridge config"/>
-  <arg name="param_file" default="ping.params"
+  <arg name="param_file" default="ardusupri.params"
        description="Extra ArduSub param file name, resolved inside param_dir"/>
   <arg name="bridge_file" default="rov_bridge.yaml"
        description="ros_gz_bridge config file name, resolved inside param_dir"/>

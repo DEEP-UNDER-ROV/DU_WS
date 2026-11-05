@@ -57,6 +57,18 @@
       <uri>model://axes</uri>
       <pose>0 0 0.0 0 0 0</pose>
     </include>
+    <model name="seafloor">
+      <static>true</static>
+      <pose>0 0 -17 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><plane><normal>0 0 1</normal><size>200 200</size></plane></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><plane><normal>0 0 1</normal><size>200 200</size></plane></geometry>
+        </visual>
+      </link>
+    </model>
 
   </world>
 </sdf>

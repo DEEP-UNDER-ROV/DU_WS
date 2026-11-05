@@ -16,3 +16,7 @@ MOT_5_DIRECTION	1
 MOT_6_DIRECTION	1
 # Terrain failsafe kicks in if the rangefinder fails, set action to 1 (hold) instead of 0 (disarm)
 FS_TERRAIN_ENAB	1
+RNGFND1_TYPE    100
+RNGFND1_ORIENT  25
+RNGFND1_MIN_CM  30
+RNGFND1_MAX_CM  3000
