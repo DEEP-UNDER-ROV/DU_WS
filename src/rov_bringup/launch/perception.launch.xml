@@ -4,12 +4,15 @@
   <arg name="use_sim" default="false" />
   <arg name="use_camera" default="true" />
   <arg name="use_correction" default="true" />
+  <arg name="use_depth_estimation" default="true" />
   <arg name="enable_stream" default="true" />
-  <arg name="remapper_file" default="perception/image_remapper.yaml" />
   <arg name="param_dir" default="$(find-pkg-share rov_bringup)/config"/>
+  <arg name="remapper_file" default="perception/image_remapper.yaml" />
   <arg name="streamer_file" default="perception/streamer.yaml"/>
   <arg name="left_map_file" default="perception/map_left.yaml"/>
   <arg name="right_map_file" default="perception/map_right.yaml"/>
+  <arg name="camera_file" default="perception/camera.yaml"/>
+  <arg name="depth_estimation_file" default="perception/depth_estimation.yaml"/>
 
   <group unless="$(var use_sim)">
     <group if="$(var use_correction)">
@@ -25,6 +28,15 @@
         <arg name="enable_color" value="$(var enable_color)" />
       </include>
     </group>
+  </group>
+
+  <group if="$(var use_depth_estimation)">
+    <include file="$(find-pkg-share rov_vision)/launch/depth_estimation.launch.xml">
+      <arg name="param_dir" value="$(var param_dir)"/>
+      <arg name="camera_file" value="$(var camera_file)"/>
+      <arg name="depth_estimation_file" value="$(var depth_estimation_file)"/>
+      <arg name="use_sim_time" value="$(var use_sim)"/>
+    </include>
   </group>
 
   <group if="$(var enable_stream)">

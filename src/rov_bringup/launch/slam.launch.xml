@@ -1,0 +1,39 @@
+<launch>
+  <arg name="use_sim" default="false"/>
+  <arg name="use_rviz" default="true"/>
+
+  <let name="profile_dir" value="$(find-pkg-share rov_bringup)/config/sim" if="$(var use_sim)"/>
+  <let name="profile_dir" value="$(find-pkg-share rov_bringup)/config/perception" unless="$(var use_sim)"/>
+
+  <arg name="param_dir" default="$(var profile_dir)"/>
+  <arg name="camera_file" default="camera.yaml"/>
+  <arg name="imu_file" default="imu.yaml"/>
+  <arg name="orb_slam3_file" default="orb_slam3.yaml"/>
+  <arg name="mask_dir" default="$(find-pkg-share rov_bringup)/mask"/>
+  <arg name="vocabulary_dir" default="$(find-pkg-share rov_slam)/vocabulary"/>
+  <arg name="vocabulary_file" default="ORBvoc.txt"/>
+
+  <arg name="left_image_topic" default="/corrected/left/image_raw"/>
+  <arg name="right_image_topic" default="/corrected/right/image_raw"/>
+  <arg name="imu_topic" default="/camera/imu"/>
+
+  <include file="$(find-pkg-share perception_bringup)/launch/rov_slam_stereo_inertial.launch.xml">
+    <arg name="param_dir" value="$(var param_dir)"/>
+    <arg name="camera_file" value="$(var camera_file)"/>
+    <arg name="imu_file" value="$(var imu_file)"/>
+    <arg name="orb_slam3_file" value="$(var orb_slam3_file)"/>
+    <arg name="mask_dir" value="$(var mask_dir)"/>
+    <arg name="vocabulary_dir" value="$(var vocabulary_dir)"/>
+    <arg name="vocabulary_file" value="$(var vocabulary_file)"/>
+    <arg name="use_sim" value="$(var use_sim)"/>
+    <arg name="left_image_topic" value="$(var left_image_topic)"/>
+    <arg name="right_image_topic" value="$(var right_image_topic)"/>
+    <arg name="imu_topic" value="$(var imu_topic)"/>
+  </include>
+
+  <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen"
+        args="-d $(find-pkg-share perception_bringup)/rviz/orbslam.rviz"
+        if="$(var use_rviz)">
+    <param name="use_sim_time" value="$(var use_sim)"/>
+  </node>
+</launch>
