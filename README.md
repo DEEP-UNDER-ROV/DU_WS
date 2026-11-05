@@ -53,7 +53,7 @@ The first build compiles Pangolin and ORB-SLAM3 through `orb_slam3_vendor`, whic
 
 ```bash
 cd ~/DU_WS
-MAKEFLAGS=-j4 colcon build --symlink-install
+MAKEFLAGS=-j4 colcon build
 source install/setup.zsh   # or setup.bash
 ```
 
