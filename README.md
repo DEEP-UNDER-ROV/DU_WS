@@ -43,6 +43,7 @@ cd ~/DU_WS/src/rov_supri/thirdparty/Ardusupri
 
 build the sub
 ```bash
+./waf configure --board sitl
 ./waf sub
 ```
 
@@ -61,11 +62,17 @@ source install/setup.zsh   # or setup.bash
 
 All top-level launch files live in `rov_bringup`, with their parameters in `rov_bringup/config/`.
 
+<div align="center">
+
 | Launch | Purpose |
 |---|---|
-| `rov.launch.xml` | Full ROV stack |
+| `rov.launch.xml` | launch ROV base system |
 | `perception.launch.xml` | Perception pipeline |
 | `slam.launch.xml` | ORB-SLAM3 |
+
+</div>
+
+use `use_sim:=true` to launch in sim
 
 ```bash
 ros2 launch rov_bringup rov.launch.xml
@@ -89,4 +96,3 @@ config/
 ├── perception/   SLAM, stereo depth, AprilTag parameters
 └── sim/          simulation parameters
 ```
-
