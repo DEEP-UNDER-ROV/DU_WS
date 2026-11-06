@@ -19,8 +19,12 @@ streamer:
       output_width: 848
       output_height: 480
       stale_timeout_sec: 1.0
-      overlay_mode_text: true
+      overlay_mode_text: false
       publish_ros_image: false
+      pip:
+        scale: 0.2 
+        margin_px: 1
+        border_px: 0
 
     gcs:
       enabled: true
