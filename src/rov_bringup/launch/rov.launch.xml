@@ -22,6 +22,7 @@
   <!-- rov_mavros -->
   <arg name="sim_url" default="udp://:14550@" description="FCU url used when use_sim:=true"/>
   <arg name="real_fc_url" default="serial:///dev/ttyACM0:921600" description="FCU url used when use_sim:=false"/>
+  <arg name="gcs_ip" default="192.168.2.1:14550" description="GCS IP"/>
 
   <include file="$(find-pkg-share rov_sim)/launch/rov_sim.launch.xml" if="$(var use_sim)">
     <arg name="world" value="$(var world)"/>
@@ -44,6 +45,7 @@
     <arg name="slam_mavros_file" value="$(var slam_mavros_file)"/>
     <arg name="use_sim" value="$(var use_sim)"/>
     <arg name="sim_url" value="$(var sim_url)"/>
+    <arg name="gcs_ip" value="$(var gcs_ip)"/>
     <arg name="real_fc_url" value="$(var real_fc_url)"/>
   </include>
 </launch>

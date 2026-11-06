@@ -9,6 +9,7 @@
     <arg name="use_sim" default="false"/>
     <arg name="sim_url" default="udp://:14550@"/>
     <arg name="real_fc_url" default="serial:///dev/ttyACM0:921600"/>
+    <arg name="gcs_ip" default="192.168.2.1:14550"/>
 
     <let name="fcu_url" value="$(eval '\'$(var real_fc_url)\' if \'$(var use_sim)\' == \'false\' else \'$(var sim_url)\'')"/>
     <let name="conn_timeout" value="$(eval '10.0 if \'$(var use_sim)\' == \'false\' else 120.0')"/>
@@ -18,6 +19,7 @@
         <param from="$(var param_dir)/$(var apm_config_file)"/>
         <param from="$(var param_dir)/$(var mavros_param_file)"/>
         <param name="fcu_url" value="$(var fcu_url)"/>
+        <param name="gcs_url" value="udp://@$(var gcs_ip)"/>
         <param name="conn.timeout" value="$(var conn_timeout)"/>
     </node>
 

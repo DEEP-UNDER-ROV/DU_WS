@@ -1,6 +1,5 @@
 /**:
   ros__parameters:
-    gcs_url: udp://@127.0.0.1:19555
     tgt_system: 1
     system_id: 255
 
