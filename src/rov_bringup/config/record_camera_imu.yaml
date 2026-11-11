@@ -1,0 +1,23 @@
+/**:
+  ros__parameters:
+    record:
+      topics:
+        - /camera/infra1/image_rect_raw
+        - /camera/infra1/camera_info
+        - /camera/infra2/image_rect_raw
+        - /camera/infra2/camera_info
+        - /camera/color/image_raw
+        - /camera/color/camera_info
+        - /camera/imu
+        - /camera/gyro/sample
+        - /camera/accel/sample
+        - /tf_static
+      include_unpublished_topics: true
+      disable_keyboard_controls: true
+
+    storage:
+      storage_id: mcap
+      storage_preset_profile: ""
+      max_cache_size: 104857600
+      max_bagfile_size: 0
+      max_bagfile_duration: 0

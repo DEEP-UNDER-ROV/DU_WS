@@ -1,0 +1,14 @@
+<launch>
+  <arg name="param_dir" default="$(find-pkg-share rov_bringup)/config"/>
+  <arg name="record_file" default="$(var param_dir)/record_camera_imu.yaml"/>
+  <arg name="qos_file" default="$(var param_dir)/record_camera_imu_qos.yaml"/>
+
+  <arg name="bag_dir" default="$(env HOME)/data/bags"/>
+  <arg name="bag_name" default="$(eval 'time.strftime(&quot;rosbag2_%Y_%m_%d-%H_%M_%S&quot;)' 'time')"/>
+
+  <node pkg="rosbag2_transport" exec="recorder" name="sensor_recorder" output="screen">
+    <param from="$(var record_file)"/>
+    <param name="storage.uri" value="$(var bag_dir)/$(var bag_name)"/>
+    <param name="record.qos_profile_overrides_path" value="$(var qos_file)"/>
+  </node>
+</launch>

@@ -1,0 +1,18 @@
+/camera/imu: &imu_qos
+  history: keep_last
+  depth: 1000
+  reliability: best_effort
+  durability: volatile
+  deadline:
+    sec: 0
+    nsec: 0
+  lifespan:
+    sec: 0
+    nsec: 0
+  liveliness: system_default
+  liveliness_lease_duration:
+    sec: 0
+    nsec: 0
+  avoid_ros_namespace_conventions: false
+/camera/gyro/sample: *imu_qos
+/camera/accel/sample: *imu_qos
